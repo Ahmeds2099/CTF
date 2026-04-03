@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ACF | The Aether Corp Breach — Cyber Forensics CTF</title>
+    <meta name="description" content="Join the Apex Cyber-Forensics Recruitment Trial — a real-world digital forensics challenge at Tjohn Institute of Technology, Bengaluru. 28 April 2026.">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- ═══ BOOT SCREEN ═══ -->
+    <div id="bootScreen" class="boot-screen">
+        <div class="boot-inner">
+            <img src="images/acf.jpg" alt="ACF" class="boot-logo">
+            <div class="boot-terminal" id="bootTerminal"></div>
+            <div class="boot-bar-wrap"><div class="boot-bar" id="bootBar"></div></div>
+            <div class="boot-status" id="bootStatus">ESTABLISHING SECURE CONNECTION...</div>
+        </div>
+    </div>
+
+    <!-- ═══ VIGNETTE GLOW BORDER ═══ -->
+    <div class="vignette"></div>
+
+    <!-- ═══ ANIMATED PARTICLE CANVAS ═══ -->
+    <canvas id="bgCanvas"></canvas>
+
+    <!-- ═══ CURSOR GLOW ═══ -->
+    <div class="cursor-glow" id="cursorGlow"></div>
+
+    <!-- ═══ FLOATING DECORATIONS ═══ -->
+    <div class="floating-decorations" id="floatingDeco"></div>
+
+    <!-- ═══ SCROLL PROGRESS NAV (left side like reference) ═══ -->
+    <div class="scroll-nav" id="scrollNav">
+        <span class="sn-idx" data-target="hero">001</span>
+        <div class="sn-track"><div class="sn-fill" id="snFill"></div><div class="sn-dot" id="snDot"></div></div>
+        <span class="sn-idx" data-target="faq">010</span>
+    </div>
+
+    <!-- ═══ NAVBAR ═══ -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-logo">
+            <img src="images/acf.jpg" alt="ACF" class="nav-logo-img">
+        </div>
+        <div class="nav-center">
+            <a href="#about" class="nav-link">About</a>
+            <a href="#workflow" class="nav-link">How It Works</a>
+            <a href="#tools" class="nav-link">Tools</a>
+            <a href="#prizes" class="nav-link">Prizes</a>
+            <a href="#team" class="nav-link">Team</a>
+            <a href="#faq" class="nav-link">FAQ</a>
+        </div>
+        <div class="nav-right">
+            <a href="https://luma.com/z8bxnl90" target="_blank" class="nav-cta">Register</a>
+            <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span></button>
+        </div>
+    </nav>
+
+    <!-- ═══ MOBILE MENU ═══ -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="#about">About</a>
+        <a href="#workflow">How It Works</a>
+        <a href="#tools">Tools</a>
+        <a href="#prizes">Prizes</a>
+        <a href="#team">Team</a>
+        <a href="#faq">FAQ</a>
+        <a href="https://luma.com/z8bxnl90" target="_blank" class="mm-cta">Register Now</a>
+    </div>
+
+    <!-- ═══ HERO ═══ -->
+    <section class="hero" id="hero">
+        <div class="hero-content">
+            <div class="hero-logos reveal">
+                <img src="images/tjohn.jpg" alt="T.John Institute" class="hero-logo-img tjohn-logo">
+                <img src="images/acf.jpg" alt="ACF" class="hero-logo-img acf-logo">
+                <img src="images/hack2hire.jpg" alt="Hack2Hire" class="hero-logo-img h2h-logo">
+            </div>
+            <p class="hero-eyebrow reveal">CYBER FORENSICS CTF &nbsp;·&nbsp; 28 APRIL 2026 &nbsp;·&nbsp; BENGALURU</p>
+            <h1 class="hero-title reveal">
+                <span class="ht-line">The Aether Corp</span>
+                <span class="ht-line ht-accent" data-text="Breach">Breach</span>
+            </h1>
+            <p class="hero-sub reveal">A beginner-friendly Capture The Flag event where you play the role of a cyber investigator. Analyze digital evidence, crack hidden codes, and solve mysteries — no prior experience needed.</p>
+            <div class="hero-stats reveal">
+                <div class="hs"><span class="hs-val" id="countdown">--d --h</span><span class="hs-lbl">Until Event</span></div>
+                <div class="hs-div"></div>
+                <div class="hs"><span class="hs-val">20</span><span class="hs-lbl">Challenges</span></div>
+                <div class="hs-div"></div>
+                <div class="hs"><span class="hs-val">Solo</span><span class="hs-lbl">Participation</span></div>
+                <div class="hs-div"></div>
+                <div class="hs"><span class="hs-val">₹100</span><span class="hs-lbl">Entry Fee</span></div>
+            </div>
+            <div class="hero-btns reveal">
+                <a href="https://luma.com/z8bxnl90" target="_blank" class="btn-primary"><span class="btn-shine"></span><i class="fas fa-user-plus"></i> Register Now</a>
+                <a href="https://wickless-lorine-nonconvertible.ngrok-free.dev" target="_blank" class="btn-locked" id="ctfdBtn"><i class="fas fa-lock"></i> CTFd Portal <span class="locked-tag">Opens 28 April</span></a>
+            </div>
+        </div>
+        <div class="hero-scroll">
+            <div class="scroll-mouse"><div class="scroll-wheel"></div></div>
+        </div>
+    </section>
+
+    <!-- ═══ ABOUT / BEGINNER OVERVIEW ═══ -->
+    <section id="about" class="sec">
+        <div class="container">
+            <div class="sec-head reveal">
+                <span class="sec-num">01</span>
+                <h2 class="sec-title">What Is This Event?</h2>
+                <div class="sec-line"></div>
+            </div>
+            <div class="about-grid">
+                <div class="about-text reveal">
+                    <h3>A Fun Cybersecurity Puzzle Challenge</h3>
+                    <p>Think of it like an escape room — but digital. You'll receive a USB drive full of mysterious files (images, audio, text files, network logs). Your job is to figure out the hidden clues inside each file using free tools we'll teach you about.</p>
+                    <p>Each clue you find is called a <strong>"flag"</strong> — submit it on our online portal to earn points. The more flags you find, the higher your rank. It's competitive, educational, and a lot of fun.</p>
+                    <ul class="about-checklist">
+                        <li><i class="fas fa-check-circle"></i> No coding or hacking experience needed</li>
+                        <li><i class="fas fa-check-circle"></i> Open to ALL college students from any institution</li>
+                        <li><i class="fas fa-check-circle"></i> Solo participation — just you and the evidence</li>
+                        <li><i class="fas fa-check-circle"></i> Challenges range from easy to advanced</li>
+                        <li><i class="fas fa-check-circle"></i> Learn real cybersecurity skills while competing</li>
+                    </ul>
+                </div>
+                <div class="about-details reveal">
+                    <div class="detail-card">
+                        <i class="fas fa-calendar-alt"></i>
+                        <div><strong>28 April 2026</strong><span>1:30 PM – 4:30 PM IST</span></div>
+                    </div>
+                    <div class="detail-card">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div><strong>T.John Institute of Technology</strong><span>Gottigere, Bengaluru — 560083</span></div>
+                    </div>
+                    <div class="detail-card">
+                        <i class="fas fa-rupee-sign"></i>
+                        <div><strong>₹100 Registration Fee</strong><span>Deadline: 27 April, 11:59 PM</span></div>
+                    </div>
+                    <div class="detail-card">
+                        <i class="fas fa-user"></i>
+                        <div><strong>Solo Participation Only</strong><span>Bring your own laptop & internet</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ CLASSIFIED BRIEFING (narrative terminal) ═══ -->
+    <section id="briefing" class="sec sec-dark">
+        <div class="container">
+            <div class="sec-head reveal">
+                <span class="sec-num">02</span>
+                <h2 class="sec-title">The Case File</h2>
+                <div class="sec-line"></div>
+            </div>
+            <div class="terminal-card reveal">
+                <div class="term-bar">
+                    <div class="term-dots"><span class="td r"></span><span class="td y"></span><span class="td g"></span></div>
+                    <span class="term-name">CLASSIFIED_BRIEFING.log — Case #2026-AETHER-BREACH</span>
+                </div>
+                <div class="term-body">
+                    <p><span class="tp">$</span> <span class="tc">cat</span> alert_dispatch.txt</p>
+                    <p class="to">🕵️ THE BIGGEST CYBER CRIME OF THE DECADE HAS OCCURRED.</p>
+                    <br>
+                    <p><span class="tp">$</span> <span class="tc">cat</span> incident_report.txt</p>
+                    <p class="to">Aether Corp's quantum research facility was breached. <span class="th">2.4 terabytes</span> of classified AI data was stolen. The only trace left behind: A fragmented evidence drive. The attacker's signature: <span class="th">"PHANTOM"</span>.</p>
+                    <br>
+                    <p><span class="tp">$</span> <span class="tc">cat</span> your_mission.txt</p>
+                    <p class="to">The <span class="th">Apex Cyber-Forensics Unit (ACF)</span> needs YOU. Your recruitment trial: analyze an <span class="th">Evidence Drive</span> containing <span class="th">20 fragmented evidence pieces</span>. Extract hidden flags, decode encrypted messages, and piece together what really happened.</p>
+                    <br>
+                    <p><span class="tp">$</span> <span class="tc">cat</span> scoring.txt</p>
+                    <p class="to">Every flag you submit on the <span class="th">CTFd portal</span> earns you points and advances your investigator rank. Solve more, rank higher, win prizes.</p>
+                    <p class="to blink-line">█ AWAITING INVESTIGATOR RESPONSE...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ HOW IT WORKS (WORKFLOW) ═══ -->
+    <section id="workflow" class="sec">
+        <div class="container">
+            <div class="sec-head reveal">
+                <span class="sec-num">03</span>
+                <h2 class="sec-title">How It Works</h2>
+                <div class="sec-line"></div>
+            </div>
+            <div class="workflow-steps">
+                <div class="wf-step reveal">
+                    <div class="wf-num">01</div>
+                    <div class="wf-content">
+                        <h3>Register & Prepare</h3>
+                        <p>Sign up on our Luma page, pay ₹100, and install the free forensic tools listed below. Read through the tool descriptions so you know what each one does.</p>
+                    </div>
+                </div>
+                <div class="wf-step reveal">
+                    <div class="wf-num">02</div>
+                    <div class="wf-content">
+                        <h3>Show Up & Get Briefed</h3>
+                        <p>Arrive at the venue on 28 April by 1:30 PM. Check in with your college ID. You'll receive your login credentials for the CTFd portal and your Evidence Drive.</p>
+                    </div>
+                </div>
+                <div class="wf-step reveal">
+                    <div class="wf-num">03</div>
+                    <div class="wf-content">
+                        <h3>Investigate the Evidence</h3>
+                        <p>Open the files on the Evidence Drive. Use the tools to analyze images, audio, network captures, and encrypted files. Each piece of evidence contains a hidden "flag" string.</p>
+                    </div>
+                </div>
+                <div class="wf-step reveal">
+                    <div class="wf-num">04</div>
+                    <div class="wf-content">
+                        <h3>Submit Flags & Climb the Ranks</h3>
+                        <p>When you find a flag, submit it on the CTFd portal. You earn points and your leaderboard rank goes up. Each file is independent — solve them in any order.</p>
+                    </div>
+                </div>
+                <div class="wf-step reveal">
+                    <div class="wf-num">05</div>
+                    <div class="wf-content">
+                        <h3>Win Prizes & Get Certified</h3>
+                        <p>At 4:00 PM, the investigation ends. Top 3 scorers win cash prizes. Everyone gets an official ACF certificate and digital badge.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ SKILLS YOU'LL LEARN ═══ -->
+    <section class="sec sec-dark">
+        <div class="container">
+            <div class="sec-head reveal">
+                <span class="sec-num">04</span>
+                <h2 class="sec-title">Skills You'll Gain</h2>
+                <div class="sec-line"></div>
+                <p class="sec-sub">Real cybersecurity skills — applicable to careers in security, IT, and forensics.</p>
+            </div>
+            <div class="skills-grid reveal">
+                <div class="skill-card"><i class="fas fa-search"></i><h4>Digital Forensics</h4><p>Examine digital evidence like professionals do in real investigations</p></div>
+                <div class="skill-card"><i class="fas fa-eye-slash"></i><h4>Steganography</h4><p>Find hidden data embedded inside images and audio files</p></div>
+                <div class="skill-card"><i class="fas fa-key"></i><h4>Cryptography</h4><p>Decode ciphers, crack encodings, and decrypt secret messages</p></div>
+                <div class="skill-card"><i class="fas fa-network-wired"></i><h4>Network Analysis</h4><p>Read network traffic captures to find intercepted communications</p></div>
+                <div class="skill-card"><i class="fas fa-tags"></i><h4>Metadata Extraction</h4><p>Pull hidden information from file properties and headers</p></div>
+                <div class="skill-card"><i class="fas fa-file-code"></i><h4>File Recovery</h4><p>Fix broken file headers and recover corrupted evidence</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ TOOLS / ARSENAL ═══ -->
+    <section id="tools" class="sec">
+        <div class="container">
+            <div class="sec-head reveal">
+                <span class="sec-num">05</span>
+                <h2 class="sec-title">Your Forensic Toolkit</h2>
+                <div class="sec-line"></div>
+                <p class="sec-sub">Download and practice with these tools <strong>BEFORE</strong> the event. They're all free and easy to use.</p>
+            </div>
+            <div class="tools-list">
+                <div class="tool-row reveal">
+                    <div class="tool-icon purple"><i class="fas fa-wand-magic-sparkles"></i></div>
+                    <div class="tool-body">
+                        <h3>CyberChef <span class="tool-badge web">Web Tool</span></h3>
+                        <p>The Cyber Swiss Army Knife — paste text and decode Base64, ROT13, hex, binary, and hundreds of other formats instantly. Drag-and-drop easy.</p>
+                    </div>
+                    <a href="https://cyberchef.org" target="_blank" class="tool-link">Launch <i class="fas fa-external-link-alt"></i></a>
+                </div>
+                <div class="tool-row reveal">
+                    <div class="tool-icon cyan"><i class="fas fa-network-wired"></i></div>
+                    <div class="tool-body">
+                        <h3>Wireshark <span class="tool-badge dl">Download</span></h3>
+                        <p>Network traffic analyzer — open .pcap files and read packet data. Look for hidden messages in network communications.</p>
+                    </div>
+                    <a href="https://www.wireshark.org/download.html" target="_blank" class="tool-link">Download <i class="fas fa-download"></i></a>
+                </div>
+                <div class="tool-row reveal">
+                    <div class="tool-icon pink"><i class="fas fa-eye"></i></div>
+                    <div class="tool-body">
+                        <h3>Aperi'Solve <span class="tool-badge web">Web Tool</span></h3>
+                        <p>Upload any image and it automatically checks for hidden data using multiple steganography techniques. Just drag and drop.</p>
+                    </div>
+                    <a href="https://www.aperisolve.com" target="_blank" class="tool-link">Launch <i class="fas fa-external-link-alt"></i></a>
+                </div>
+                <div class="tool-row reveal">
+                    <div class="tool-icon cyan"><i class="fas fa-code"></i></div>
+                    <div class="tool-body">
+                        <h3>HexEd.it <span class="tool-badge web">Web Tool</span></h3>
+                        <p>Hex editor in your browser — open any file and see its raw bytes. Useful for finding embedded text or fixing corrupted file headers.</p>
+                    </div>
+                    <a href="https://hexed.it" target="_blank" class="tool-link">Launch <i class="fas fa-external-link-alt"></i></a>
+                </div>
+                <div class="tool-row reveal">
+                    <div class="tool-icon purple"><i class="fas fa-headphones"></i></div>
+                    <div class="tool-body">
+                        <h3>Audacity <span class="tool-badge dl">Download</span></h3>
+                        <p>Audio editor — open audio files and switch to spectrogram view. Hidden messages can be encoded as visual patterns in sound frequencies.</p>
+                    </div>
+                    <a href="https://www.audacityteam.org/download" target="_blank" class="tool-link">Download <i class="fas fa-download"></i></a>
+                </div>
+                <div class="tool-row reveal">
+                    <div class="tool-icon pink"><i class="fas fa-camera"></i></div>
+                    <div class="tool-body">
+                        <h3>ExifTool <span class="tool-badge dl">Download</span></h3>
+                        <p>Reads hidden metadata from files — GPS coordinates, comments, timestamps, and author info that may contain clues.</p>
+                    </div>
+                    <a href="https://exiftool.org" target="_blank" class="tool-link">Download <i class="fas fa-download"></i></a>
+                </div>
+                <div class="tool-row reveal">
+                    <div class="tool-icon cyan"><i class="fas fa-layer-group"></i></div>
+                    <div class="tool-body">
+                        <h3>StegSolve <span class="tool-badge dl">Java App</span></h3>
+                        <p>Cycle through color channels and bit planes of images to reveal hidden visuals. Great for image-based steganography challenges.</p>
+                    </div>
+                    <a href="https://github.com/zardus/ctf-tools/tree/master/stegsolve" target="_blank" class="tool-link">Get Tool <i class="fab fa-github"></i></a>
+                </div>
+                <div class="tool-row reveal">
+                    <div class="tool-icon purple"><i class="fas fa-file-zipper"></i></div>
+                    <div class="tool-body">
+                        <h3>Binwalk <span class="tool-badge dl">CLI Tool</span></h3>
+                        <p>Extracts files hidden inside other files — like a ZIP embedded within an image. Run from terminal on Linux/WSL.</p>
+                    </div>
+                    <a href="https://github.com/ReFirmLabs/binwalk" target="_blank" class="tool-link">Get Tool <i class="fab fa-github"></i></a>
+                </div>
+            </div>
+            <div class="tools-note reveal">
+                <i class="fas fa-info-circle"></i>
+                <p><strong>Pro tip:</strong> Web tools need no installation. For download tools, install them now and try opening a random image/file to make sure they work. You don't want to troubleshoot installations during the event!</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ GUIDELINES ═══ -->
+    <section class="sec sec-dark">
+        <div class="container">
+            <div class="sec-head reveal">
+                <span class="sec-num">06</span>
+                <h2 class="sec-title">Guidelines & Preparation</h2>
+                <div class="sec-line"></div>
+            </div>
+            <div class="guidelines-grid">
+                <div class="gl-card reveal">
+                    <div class="gl-icon"><i class="fas fa-laptop"></i></div>
+                    <h4>Bring Your Laptop</h4>
+                    <p>Windows, Linux, or Mac — all work. Make sure it's fully charged.</p>
+                </div>
+                <div class="gl-card reveal">
+                    <div class="gl-icon"><i class="fas fa-plug"></i></div>
+                    <h4>Bring a Charger</h4>
+                    <p>Power outlets are limited, so a full charge + charger is essential.</p>
+                </div>
+                <div class="gl-card reveal">
+                    <div class="gl-icon"><i class="fas fa-wifi"></i></div>
+                    <h4>Internet Access</h4>
+                    <p>Bring a mobile hotspot. Venue Wi-Fi available but bandwidth may be limited.</p>
+                </div>
+                <div class="gl-card reveal">
+                    <div class="gl-icon"><i class="fas fa-download"></i></div>
+                    <h4>Install Tools Beforehand</h4>
+                    <p>Download all tools from the list above and test them before event day.</p>
+                </div>
+                <div class="gl-card reveal">
+                    <div class="gl-icon"><i class="fas fa-id-card"></i></div>
+                    <h4>College ID Required</h4>
+                    <p>Bring your college ID card for verification at check-in.</p>
+                </div>
+                <div class="gl-card reveal">
+                    <div class="gl-icon"><i class="fas fa-brain"></i></div>
+                    <h4>Come Curious</h4>
+                    <p>The most important tool is your curiosity. Try everything, Google freely, explore.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ PRIZES ═══ -->
+    <section id="prizes" class="sec">
+        <div class="container">
+            <div class="sec-head reveal">
+                <span class="sec-num">07</span>
+                <h2 class="sec-title">Prizes & Rewards</h2>
+                <div class="sec-line"></div>
+            </div>
+            <div class="prizes-row">
+                <div class="prize-card silver reveal">
+                    <span class="pr-rank">2ND</span>
+                    <div class="pr-icon"><i class="fas fa-medal"></i></div>
+                    <div class="pr-amount">₹1,000</div>
+                    <p>ACF Digital Badge + Certificate of Merit</p>
+                </div>
+                <div class="prize-card gold reveal">
+                    <div class="pr-crown"><i class="fas fa-crown"></i></div>
+                    <span class="pr-rank">1ST</span>
+                    <div class="pr-icon"><i class="fas fa-trophy"></i></div>
+                    <div class="pr-amount">₹2,000</div>
+                    <p>ACF Digital Badge + Certificate of Excellence</p>
+                </div>
+                <div class="prize-card bronze reveal">
+                    <span class="pr-rank">3RD</span>
+                    <div class="pr-icon"><i class="fas fa-award"></i></div>
+                    <div class="pr-amount">₹500</div>
+                    <p>ACF Digital Badge + Certificate of Achievement</p>
+                </div>
+            </div>
+            <div class="all-part reveal">
+                <i class="fas fa-certificate"></i>
+                <div><strong>All Participants</strong> — Official ACF Participation Certificate + Digital Badge</div>
+            </div>
+            <div class="what-you-get reveal">
+                <h3>What Your ₹100 Gets You</h3>
+                <div class="wyg-grid">
+                    <span><i class="fas fa-hdd"></i> Exclusive Evidence Drive</span>
+                    <span><i class="fas fa-desktop"></i> CTFd Challenge Portal Access</span>
+                    <span><i class="fas fa-shield-halved"></i> Hands-on Cybersec Experience</span>
+                    <span><i class="fas fa-scroll"></i> Participation Certificate</span>
+                    <span><i class="fas fa-coins"></i> Chance to Win Cash Prizes</span>
+                    <span><i class="fas fa-badge-check"></i> Official ACF Digital Badge</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ TEAM ═══ -->
+    <section id="team" class="sec sec-dark">
+        <div class="container">
+            <div class="sec-head reveal">
+                <span class="sec-num">08</span>
+                <h2 class="sec-title">Meet the Operatives</h2>
+                <div class="sec-line"></div>
+            </div>
+
+            <!-- Faculty -->
+            <div class="team-group reveal">
+                <h3 class="tg-title"><i class="fas fa-user-tie"></i> Faculty Advisor</h3>
+                <div class="team-grid single">
+                    <div class="team-card faculty">
+                        <div class="tc-avatar"><i class="fas fa-chalkboard-user"></i></div>
+                        <div class="tc-info">
+                            <strong>Dr. Sudaroli</strong>
+                            <span class="tc-role">Faculty Coordinator — Dept. of Computer Science</span>
+                            <a href="tel:+919886041664"><i class="fas fa-phone"></i> +91 98860 41664</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Student Leads -->
+            <div class="team-group reveal">
+                <h3 class="tg-title"><i class="fas fa-star"></i> Core Operatives</h3>
+                <div class="team-grid">
+                    <div class="team-card lead">
+                        <div class="tc-avatar"><i class="fas fa-chess-king"></i></div>
+                        <div class="tc-info">
+                            <strong>Ahmed Sufiyan</strong>
+                            <span class="tc-role">Operations Commander</span>
+                            <a href="tel:+917483368337"><i class="fas fa-phone"></i> +91 74833 68337</a>
+                        </div>
+                    </div>
+                    <div class="team-card lead">
+                        <div class="tc-avatar"><i class="fas fa-palette"></i></div>
+                        <div class="tc-info">
+                            <strong>Aman Pendari</strong>
+                            <span class="tc-role">Visual Intelligence Lead</span>
+                            <a href="tel:+917899727402"><i class="fas fa-phone"></i> +91 78997 27402</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Volunteers -->
+            <div class="team-group reveal">
+                <h3 class="tg-title"><i class="fas fa-users-gear"></i> Field Operatives</h3>
+                <div class="team-grid">
+                    <div class="team-card">
+                        <div class="tc-avatar"><i class="fas fa-book-skull"></i></div>
+                        <div class="tc-info">
+                            <strong>Raga Mishra</strong>
+                            <span class="tc-role">Narrative Architect & Challenge Designer</span>
+                            <a href="tel:+919739953867"><i class="fas fa-phone"></i> +91 97399 53867</a>
+                        </div>
+                    </div>
+                    <div class="team-card">
+                        <div class="tc-avatar"><i class="fas fa-server"></i></div>
+                        <div class="tc-info">
+                            <strong>Jeswin</strong>
+                            <span class="tc-role">Infrastructure & Systems Engineer</span>
+                            <a href="tel:+917892429502"><i class="fas fa-phone"></i> +91 78924 29502</a>
+                        </div>
+                    </div>
+                    <div class="team-card">
+                        <div class="tc-avatar"><i class="fas fa-clipboard-check"></i></div>
+                        <div class="tc-info">
+                            <strong>Jonah</strong>
+                            <span class="tc-role">Protocol & Compliance Officer</span>
+                            <a href="tel:+919902306963"><i class="fas fa-phone"></i> +91 99023 06963</a>
+                        </div>
+                    </div>
+                    <div class="team-card">
+                        <div class="tc-avatar"><i class="fas fa-clipboard-check"></i></div>
+                        <div class="tc-info">
+                            <strong>Sajeesh</strong>
+                            <span class="tc-role">Protocol & Compliance Officer</span>
+                            <a href="tel:+918310204343"><i class="fas fa-phone"></i> +91 83102 04343</a>
+                        </div>
+                    </div>
+                    <div class="team-card">
+                        <div class="tc-avatar"><i class="fas fa-trophy"></i></div>
+                        <div class="tc-info">
+                            <strong>Disha</strong>
+                            <span class="tc-role">Awards & Certification Strategist</span>
+                            <a href="tel:+919113265262"><i class="fas fa-phone"></i> +91 91132 65262</a>
+                        </div>
+                    </div>
+                    <div class="team-card">
+                        <div class="tc-avatar"><i class="fas fa-trophy"></i></div>
+                        <div class="tc-info">
+                            <strong>Palak</strong>
+                            <span class="tc-role">Awards & Certification Strategist</span>
+                            <a href="tel:+919425660420"><i class="fas fa-phone"></i> +91 94256 60420</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hack2Hire Collaboration -->
+            <div class="team-group reveal">
+                <h3 class="tg-title"><img src="images/hack2hire.jpg" alt="" class="tg-logo"> In Collaboration with HACK2HIRE</h3>
+                <div class="team-grid">
+                    <div class="team-card h2h">
+                        <div class="tc-avatar"><i class="fas fa-user-shield"></i></div>
+                        <div class="tc-info">
+                            <strong>Gomathi D</strong>
+                            <span class="tc-role">Hack2Hire Liaison</span>
+                            <a href="tel:+918618474453"><i class="fas fa-phone"></i> +91 86184 74453</a>
+                        </div>
+                    </div>
+                    <div class="team-card h2h">
+                        <div class="tc-avatar"><i class="fas fa-user-shield"></i></div>
+                        <div class="tc-info">
+                            <strong>Yashaswini</strong>
+                            <span class="tc-role">Hack2Hire Liaison</span>
+                            <a href="tel:+917338144731"><i class="fas fa-phone"></i> +91 73381 44731</a>
+                        </div>
+                    </div>
+                    <div class="team-card h2h">
+                        <div class="tc-avatar"><i class="fas fa-user-shield"></i></div>
+                        <div class="tc-info">
+                            <strong>G Surya</strong>
+                            <span class="tc-role">Hack2Hire Liaison</span>
+                            <a href="tel:+918667234480"><i class="fas fa-phone"></i> +91 86672 34480</a>
+                        </div>
+                    </div>
+                    <div class="team-card h2h">
+                        <div class="tc-avatar"><i class="fas fa-user-shield"></i></div>
+                        <div class="tc-info">
+                            <strong>Ahmed Sufiyan</strong>
+                            <span class="tc-role">Hack2Hire Liaison</span>
+                            <a href="tel:+917483363837"><i class="fas fa-phone"></i> +91 74833 63837</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ SCHEDULE ═══ -->
+    <section class="sec">
+        <div class="container">
+            <div class="sec-head reveal">
+                <span class="sec-num">09</span>
+                <h2 class="sec-title">Event Schedule</h2>
+                <div class="sec-line"></div>
+            </div>
+            <div class="schedule-row reveal">
+                <div class="sched-item">
+                    <div class="si-time">1:30 PM</div>
+                    <div class="si-dot"></div>
+                    <div class="si-text"><strong>Check-in & Briefing</strong><p>Registration, ID verification, and mission brief</p></div>
+                </div>
+                <div class="sched-item active">
+                    <div class="si-time">2:00 PM</div>
+                    <div class="si-dot"></div>
+                    <div class="si-text"><strong>Investigation Begins</strong><p>2 hours of forensic analysis & flag extraction</p></div>
+                </div>
+                <div class="sched-item">
+                    <div class="si-time">4:00 PM</div>
+                    <div class="si-dot"></div>
+                    <div class="si-text"><strong>Closing Ceremony</strong><p>Winners announced, prizes & certificates distributed</p></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ FAQ ═══ -->
+    <section id="faq" class="sec sec-dark">
+        <div class="container">
+            <div class="sec-head reveal">
+                <span class="sec-num">10</span>
+                <h2 class="sec-title">Frequently Asked Questions</h2>
+                <div class="sec-line"></div>
+            </div>
+            <div class="faq-list">
+                <div class="faq-item reveal"><button class="faq-q"><span>Do I need prior CTF experience?</span><i class="fas fa-plus"></i></button><div class="faq-a"><p>No! Challenges start easy and get harder. A curious mind is all you need.</p></div></div>
+                <div class="faq-item reveal"><button class="faq-q"><span>Can I participate with friends?</span><i class="fas fa-plus"></i></button><div class="faq-a"><p>This is solo participation only. Everyone works individually, but your friends can register separately and compete alongside you.</p></div></div>
+                <div class="faq-item reveal"><button class="faq-q"><span>What if I don't know how to use the tools?</span><i class="fas fa-plus"></i></button><div class="faq-a"><p>All tools listed above are beginner-friendly. Most are web-based — just open the link and paste/upload your file. Install the downloadable ones beforehand and do a quick test.</p></div></div>
+                <div class="faq-item reveal"><button class="faq-q"><span>Will there be internet access?</span><i class="fas fa-plus"></i></button><div class="faq-a"><p>Yes, venue Wi-Fi is available. But we strongly recommend bringing your own mobile hotspot — bandwidth may be limited with many participants.</p></div></div>
+                <div class="faq-item reveal"><button class="faq-q"><span>Is this only for T.John Institute students?</span><i class="fas fa-plus"></i></button><div class="faq-a"><p>No! The event is open to all college students and tech enthusiasts from any institution.</p></div></div>
+                <div class="faq-item reveal"><button class="faq-q"><span>How do I pay the ₹100 registration fee?</span><i class="fas fa-plus"></i></button><div class="faq-a"><p>Payment details are provided during registration on the Luma page. Click "Register Now" to get started.</p></div></div>
+                <div class="faq-item reveal"><button class="faq-q"><span>What's the registration deadline?</span><i class="fas fa-plus"></i></button><div class="faq-a"><p>27 April 2026, 11:59 PM. Seats are limited — register early!</p></div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ CTA ═══ -->
+    <section class="cta-sec">
+        <div class="container">
+            <div class="cta-box reveal">
+                <h2>Ready to Join the Investigation?</h2>
+                <p>Limited seats. Registration closes <strong>27 April 2026</strong>.</p>
+                <a href="https://luma.com/z8bxnl90" target="_blank" class="btn-primary lg"><span class="btn-shine"></span><i class="fas fa-user-plus"></i> Register Now — ₹100</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ FOOTER ═══ -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-top">
+                <div class="footer-logos">
+                    <img src="images/acf.jpg" alt="ACF">
+                    <img src="images/tjohn.jpg" alt="T.John">
+                    <img src="images/hack2hire.jpg" alt="Hack2Hire">
+                </div>
+                <div class="footer-motto">"EX VERITATE, LUX" — From Truth, Light</div>
+            </div>
+            <div class="footer-bottom">
+                <span>CASE #2026-AETHER-BREACH | CLASSIFICATION: TOP SECRET</span>
+                <span>© 2026 ACF | T.John Institute of Technology | Department of Computer Science</span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
