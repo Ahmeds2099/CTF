@@ -139,7 +139,7 @@
         '[NET]  Establishing encrypted tunnel... OK',
         '[AUTH] Verifying clearance level... GRANTED',
         '[DB]   Loading Case #2026-AETHER-BREACH...',
-        '[SCAN] 20 evidence fragments detected',
+        '[SCAN] 15 evidence fragments detected',
         '[SIG]  Threat signature "PHANTOM" identified',
         '[SYS]  Mounting investigation portal...',
         '[OK]   All systems operational. Welcome, Investigator.'
