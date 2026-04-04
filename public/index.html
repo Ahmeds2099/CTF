@@ -11,15 +11,23 @@
 </head>
 <body>
 
-    <!-- ═══ BOOT SCREEN ═══ -->
+    <!-- ═══ BOOT SCREEN (3 PHASES) ═══ -->
     <div id="bootScreen" class="boot-screen">
-        <div class="boot-inner">
-            <img src="images/acf.jpg" alt="ACF" class="boot-logo">
-            <div class="boot-terminal" id="bootTerminal"></div>
-            <div class="boot-bar-wrap"><div class="boot-bar" id="bootBar"></div></div>
-            <div class="boot-status" id="bootStatus">ESTABLISHING SECURE CONNECTION...</div>
+
+        <!-- ── PHASE 3: Boot Terminal (post-decode) ── -->
+        <div class="bp bp-boot active" id="bpBoot">
+            <div class="boot-inner">
+                <img src="images/acf.jpg" alt="ACF" class="boot-logo">
+                <div class="boot-success-badge" id="bootSuccessBadge">
+                    <i class="fas fa-shield-check"></i> AUTHORIZATION COMPLETE — WELCOME RECRUIT
+                </div>
+                <div class="boot-terminal" id="bootTerminal"></div>
+                <div class="boot-bar-wrap"><div class="boot-bar" id="bootBar"></div></div>
+                <div class="boot-status" id="bootStatus">ESTABLISHING SECURE CONNECTION...</div>
+            </div>
         </div>
-    </div>
+
+    </div><!-- /bootScreen -->
 
     <!-- ═══ VIGNETTE GLOW BORDER ═══ -->
     <div class="vignette"></div>
@@ -33,7 +41,7 @@
     <!-- ═══ FLOATING DECORATIONS ═══ -->
     <div class="floating-decorations" id="floatingDeco"></div>
 
-    <!-- ═══ SCROLL PROGRESS NAV (left side like reference) ═══ -->
+    <!-- ═══ SCROLL PROGRESS NAV (left side) ═══ -->
     <div class="scroll-nav" id="scrollNav">
         <span class="sn-idx" data-target="hero">001</span>
         <div class="sn-track"><div class="sn-fill" id="snFill"></div><div class="sn-dot" id="snDot"></div></div>
@@ -139,7 +147,7 @@
                     </div>
                     <div class="detail-card">
                         <i class="fas fa-user"></i>
-                        <div><strong>Solo Participation Only</strong><span>Bring your own laptop & internet</span></div>
+                        <div><strong>Solo Participation Only</strong><span>Bring your own laptop &amp; internet</span></div>
                     </div>
                 </div>
             </div>
@@ -189,14 +197,14 @@
                 <div class="wf-step reveal">
                     <div class="wf-num">01</div>
                     <div class="wf-content">
-                        <h3>Register & Prepare</h3>
+                        <h3>Register &amp; Prepare</h3>
                         <p>Sign up on our Luma page, pay ₹100, and install the free forensic tools listed below. Read through the tool descriptions so you know what each one does.</p>
                     </div>
                 </div>
                 <div class="wf-step reveal">
                     <div class="wf-num">02</div>
                     <div class="wf-content">
-                        <h3>Show Up & Get Briefed</h3>
+                        <h3>Show Up &amp; Get Briefed</h3>
                         <p>Arrive at the venue on 28 April by 1:30 PM. Check in with your college ID. You'll receive your login credentials for the CTFd portal and your Evidence Drive.</p>
                     </div>
                 </div>
@@ -210,14 +218,14 @@
                 <div class="wf-step reveal">
                     <div class="wf-num">04</div>
                     <div class="wf-content">
-                        <h3>Submit Flags & Climb the Ranks</h3>
+                        <h3>Submit Flags &amp; Climb the Ranks</h3>
                         <p>When you find a flag, submit it on the CTFd portal. You earn points and your leaderboard rank goes up. Each file is independent — solve them in any order.</p>
                     </div>
                 </div>
                 <div class="wf-step reveal">
                     <div class="wf-num">05</div>
                     <div class="wf-content">
-                        <h3>Win Prizes & Get Certified</h3>
+                        <h3>Win Prizes &amp; Get Certified</h3>
                         <p>At 4:00 PM, the investigation ends. Top 3 scorers win cash prizes. Everyone gets an official ACF certificate and digital badge.</p>
                     </div>
                 </div>
@@ -274,55 +282,55 @@
                 <div class="tool-row reveal">
                     <div class="tool-icon pink"><i class="fas fa-eye"></i></div>
                     <div class="tool-body">
-                        <h3>Aperi'Solve <span class="tool-badge web">Web Tool</span></h3>
-                        <p>Upload any image and it automatically checks for hidden data using multiple steganography techniques. Just drag and drop.</p>
+                        <h3>StegOnline / AperiSolve <span class="tool-badge web">Web Tool</span></h3>
+                        <p>Upload an image and instantly detect hidden steganographic data. Works on PNG, JPG, and BMP files.</p>
                     </div>
-                    <a href="https://www.aperisolve.com" target="_blank" class="tool-link">Launch <i class="fas fa-external-link-alt"></i></a>
+                    <a href="https://aperisolve.com" target="_blank" class="tool-link">Launch <i class="fas fa-external-link-alt"></i></a>
                 </div>
                 <div class="tool-row reveal">
-                    <div class="tool-icon cyan"><i class="fas fa-code"></i></div>
-                    <div class="tool-body">
-                        <h3>HexEd.it <span class="tool-badge web">Web Tool</span></h3>
-                        <p>Hex editor in your browser — open any file and see its raw bytes. Useful for finding embedded text or fixing corrupted file headers.</p>
-                    </div>
-                    <a href="https://hexed.it" target="_blank" class="tool-link">Launch <i class="fas fa-external-link-alt"></i></a>
-                </div>
-                <div class="tool-row reveal">
-                    <div class="tool-icon purple"><i class="fas fa-headphones"></i></div>
-                    <div class="tool-body">
-                        <h3>Audacity <span class="tool-badge dl">Download</span></h3>
-                        <p>Audio editor — open audio files and switch to spectrogram view. Hidden messages can be encoded as visual patterns in sound frequencies.</p>
-                    </div>
-                    <a href="https://www.audacityteam.org/download" target="_blank" class="tool-link">Download <i class="fas fa-download"></i></a>
-                </div>
-                <div class="tool-row reveal">
-                    <div class="tool-icon pink"><i class="fas fa-camera"></i></div>
+                    <div class="tool-icon purple"><i class="fas fa-terminal"></i></div>
                     <div class="tool-body">
                         <h3>ExifTool <span class="tool-badge dl">Download</span></h3>
-                        <p>Reads hidden metadata from files — GPS coordinates, comments, timestamps, and author info that may contain clues.</p>
+                        <p>Reads metadata from any file — GPS coordinates, creation dates, camera models, author names, and hidden custom fields.</p>
                     </div>
                     <a href="https://exiftool.org" target="_blank" class="tool-link">Download <i class="fas fa-download"></i></a>
                 </div>
                 <div class="tool-row reveal">
-                    <div class="tool-icon cyan"><i class="fas fa-layer-group"></i></div>
+                    <div class="tool-icon cyan"><i class="fas fa-code"></i></div>
                     <div class="tool-body">
-                        <h3>StegSolve <span class="tool-badge dl">Java App</span></h3>
-                        <p>Cycle through color channels and bit planes of images to reveal hidden visuals. Great for image-based steganography challenges.</p>
+                        <h3>Binwalk <span class="tool-badge dl">Download</span></h3>
+                        <p>Extracts hidden files embedded inside other files. Great for finding data concealed inside images or firmware.</p>
                     </div>
-                    <a href="https://github.com/zardus/ctf-tools/tree/master/stegsolve" target="_blank" class="tool-link">Get Tool <i class="fab fa-github"></i></a>
+                    <a href="https://github.com/ReFirmLabs/binwalk" target="_blank" class="tool-link">GitHub <i class="fas fa-external-link-alt"></i></a>
                 </div>
                 <div class="tool-row reveal">
-                    <div class="tool-icon purple"><i class="fas fa-file-zipper"></i></div>
+                    <div class="tool-icon pink"><i class="fas fa-headphones"></i></div>
                     <div class="tool-body">
-                        <h3>Binwalk <span class="tool-badge dl">CLI Tool</span></h3>
-                        <p>Extracts files hidden inside other files — like a ZIP embedded within an image. Run from terminal on Linux/WSL.</p>
+                        <h3>Sonic Visualiser / Audacity <span class="tool-badge dl">Download</span></h3>
+                        <p>Analyze audio files visually. Hidden messages are often encoded in spectrograms — visual patterns that appear when you view the audio as an image.</p>
                     </div>
-                    <a href="https://github.com/ReFirmLabs/binwalk" target="_blank" class="tool-link">Get Tool <i class="fab fa-github"></i></a>
+                    <a href="https://www.sonicvisualiser.org" target="_blank" class="tool-link">Download <i class="fas fa-download"></i></a>
+                </div>
+                <div class="tool-row reveal">
+                    <div class="tool-icon purple"><i class="fas fa-search-plus"></i></div>
+                    <div class="tool-body">
+                        <h3>HxD Hex Editor <span class="tool-badge dl">Windows</span></h3>
+                        <p>Open any file and view the raw bytes. Broken file headers can be fixed by editing the magic bytes at the start of a file.</p>
+                    </div>
+                    <a href="https://mh-nexus.de/en/hxd/" target="_blank" class="tool-link">Download <i class="fas fa-download"></i></a>
+                </div>
+                <div class="tool-row reveal">
+                    <div class="tool-icon cyan"><i class="fas fa-globe"></i></div>
+                    <div class="tool-body">
+                        <h3>dCode.fr <span class="tool-badge web">Web Tool</span></h3>
+                        <p>Identify and decode hundreds of cipher types — Caesar, Vigenère, Morse, Bacon, and more. Also has a cipher identifier tool.</p>
+                    </div>
+                    <a href="https://www.dcode.fr/en" target="_blank" class="tool-link">Launch <i class="fas fa-external-link-alt"></i></a>
                 </div>
             </div>
             <div class="tools-note reveal">
-                <i class="fas fa-info-circle"></i>
-                <p><strong>Pro tip:</strong> Web tools need no installation. For download tools, install them now and try opening a random image/file to make sure they work. You don't want to troubleshoot installations during the event!</p>
+                <i class="fas fa-circle-info"></i>
+                <p><strong>Pro Tip:</strong> Install all downloadable tools before the event. Test each one with a sample file so you're comfortable using it on competition day. Web tools just need a browser tab open.</p>
             </div>
         </div>
     </section>
@@ -332,40 +340,16 @@
         <div class="container">
             <div class="sec-head reveal">
                 <span class="sec-num">06</span>
-                <h2 class="sec-title">Guidelines & Preparation</h2>
+                <h2 class="sec-title">Competition Guidelines</h2>
                 <div class="sec-line"></div>
             </div>
             <div class="guidelines-grid">
-                <div class="gl-card reveal">
-                    <div class="gl-icon"><i class="fas fa-laptop"></i></div>
-                    <h4>Bring Your Laptop</h4>
-                    <p>Windows, Linux, or Mac — all work. Make sure it's fully charged.</p>
-                </div>
-                <div class="gl-card reveal">
-                    <div class="gl-icon"><i class="fas fa-plug"></i></div>
-                    <h4>Bring a Charger</h4>
-                    <p>Power outlets are limited, so a full charge + charger is essential.</p>
-                </div>
-                <div class="gl-card reveal">
-                    <div class="gl-icon"><i class="fas fa-wifi"></i></div>
-                    <h4>Internet Access</h4>
-                    <p>Bring a mobile hotspot. Venue Wi-Fi available but bandwidth may be limited.</p>
-                </div>
-                <div class="gl-card reveal">
-                    <div class="gl-icon"><i class="fas fa-download"></i></div>
-                    <h4>Install Tools Beforehand</h4>
-                    <p>Download all tools from the list above and test them before event day.</p>
-                </div>
-                <div class="gl-card reveal">
-                    <div class="gl-icon"><i class="fas fa-id-card"></i></div>
-                    <h4>College ID Required</h4>
-                    <p>Bring your college ID card for verification at check-in.</p>
-                </div>
-                <div class="gl-card reveal">
-                    <div class="gl-icon"><i class="fas fa-brain"></i></div>
-                    <h4>Come Curious</h4>
-                    <p>The most important tool is your curiosity. Try everything, Google freely, explore.</p>
-                </div>
+                <div class="gl-card reveal"><div class="gl-icon"><i class="fas fa-laptop"></i></div><h4>Bring Your Own Laptop</h4><p>Any OS works. Install tools beforehand.</p></div>
+                <div class="gl-card reveal"><div class="gl-icon"><i class="fas fa-wifi"></i></div><h4>Bring Your Own Hotspot</h4><p>Venue Wi-Fi available but limited.</p></div>
+                <div class="gl-card reveal"><div class="gl-icon"><i class="fas fa-id-card"></i></div><h4>Bring Your College ID</h4><p>Required for entry and check-in.</p></div>
+                <div class="gl-card reveal"><div class="gl-icon"><i class="fas fa-ban"></i></div><h4>No Sharing Flags</h4><p>Solo event — all work must be your own.</p></div>
+                <div class="gl-card reveal"><div class="gl-icon"><i class="fas fa-clock"></i></div><h4>On Time Matters</h4><p>Arrive by 1:30 PM. Late entry may be refused.</p></div>
+                <div class="gl-card reveal"><div class="gl-icon"><i class="fas fa-shield-halved"></i></div><h4>Ethical Conduct Only</h4><p>No attacks on infrastructure or other participants.</p></div>
             </div>
         </div>
     </section>
@@ -375,7 +359,7 @@
         <div class="container">
             <div class="sec-head reveal">
                 <span class="sec-num">07</span>
-                <h2 class="sec-title">Prizes & Rewards</h2>
+                <h2 class="sec-title">Prizes &amp; Rewards</h2>
                 <div class="sec-line"></div>
             </div>
             <div class="prizes-row">
@@ -472,7 +456,7 @@
                         <div class="tc-avatar"><i class="fas fa-book-skull"></i></div>
                         <div class="tc-info">
                             <strong>Raga Mishra</strong>
-                            <span class="tc-role">Narrative Architect & Challenge Designer</span>
+                            <span class="tc-role">Narrative Architect &amp; Challenge Designer</span>
                             <a href="tel:+919739953867"><i class="fas fa-phone"></i> +91 97399 53867</a>
                         </div>
                     </div>
@@ -480,7 +464,7 @@
                         <div class="tc-avatar"><i class="fas fa-server"></i></div>
                         <div class="tc-info">
                             <strong>Jeswin</strong>
-                            <span class="tc-role">Infrastructure & Systems Engineer</span>
+                            <span class="tc-role">Infrastructure &amp; Systems Engineer</span>
                             <a href="tel:+917892429502"><i class="fas fa-phone"></i> +91 78924 29502</a>
                         </div>
                     </div>
@@ -488,7 +472,7 @@
                         <div class="tc-avatar"><i class="fas fa-clipboard-check"></i></div>
                         <div class="tc-info">
                             <strong>Jonah</strong>
-                            <span class="tc-role">Protocol & Compliance Officer</span>
+                            <span class="tc-role">Protocol &amp; Compliance Officer</span>
                             <a href="tel:+919902306963"><i class="fas fa-phone"></i> +91 99023 06963</a>
                         </div>
                     </div>
@@ -496,7 +480,7 @@
                         <div class="tc-avatar"><i class="fas fa-clipboard-check"></i></div>
                         <div class="tc-info">
                             <strong>Sajeesh</strong>
-                            <span class="tc-role">Protocol & Compliance Officer</span>
+                            <span class="tc-role">Protocol &amp; Compliance Officer</span>
                             <a href="tel:+918310204343"><i class="fas fa-phone"></i> +91 83102 04343</a>
                         </div>
                     </div>
@@ -504,7 +488,7 @@
                         <div class="tc-avatar"><i class="fas fa-trophy"></i></div>
                         <div class="tc-info">
                             <strong>Disha</strong>
-                            <span class="tc-role">Awards & Certification Strategist</span>
+                            <span class="tc-role">Awards &amp; Certification Strategist</span>
                             <a href="tel:+919113265262"><i class="fas fa-phone"></i> +91 91132 65262</a>
                         </div>
                     </div>
@@ -512,7 +496,7 @@
                         <div class="tc-avatar"><i class="fas fa-trophy"></i></div>
                         <div class="tc-info">
                             <strong>Palak</strong>
-                            <span class="tc-role">Awards & Certification Strategist</span>
+                            <span class="tc-role">Awards &amp; Certification Strategist</span>
                             <a href="tel:+919425660420"><i class="fas fa-phone"></i> +91 94256 60420</a>
                         </div>
                     </div>
@@ -572,17 +556,17 @@
                 <div class="sched-item">
                     <div class="si-time">1:30 PM</div>
                     <div class="si-dot"></div>
-                    <div class="si-text"><strong>Check-in & Briefing</strong><p>Registration, ID verification, and mission brief</p></div>
+                    <div class="si-text"><strong>Check-in &amp; Briefing</strong><p>Registration, ID verification, and mission brief</p></div>
                 </div>
                 <div class="sched-item active">
                     <div class="si-time">2:00 PM</div>
                     <div class="si-dot"></div>
-                    <div class="si-text"><strong>Investigation Begins</strong><p>2 hours of forensic analysis & flag extraction</p></div>
+                    <div class="si-text"><strong>Investigation Begins</strong><p>2 hours of forensic analysis &amp; flag extraction</p></div>
                 </div>
                 <div class="sched-item">
                     <div class="si-time">4:00 PM</div>
                     <div class="si-dot"></div>
-                    <div class="si-text"><strong>Closing Ceremony</strong><p>Winners announced, prizes & certificates distributed</p></div>
+                    <div class="si-text"><strong>Closing Ceremony</strong><p>Winners announced, prizes &amp; certificates distributed</p></div>
                 </div>
             </div>
         </div>

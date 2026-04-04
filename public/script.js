@@ -1,7 +1,7 @@
 /* ═══════════════════════════════════════════════════════
-   ACF — THE AETHER CORP BREACH — ENHANCED FRONTEND
-   Animated background, bidirectional scroll reveals,
-   cursor glow, card tilt, micro-interactions
+   ACF — THE AETHER CORP BREACH
+   Full frontend: Decode minigame boot, side terminal,
+   particle canvas, scroll reveals, card tilt, etc.
    ═══════════════════════════════════════════════════════ */
 
 (function () {
@@ -9,7 +9,6 @@
 
     /* ──────────────────────────────────
        1. ANIMATED PARTICLE CANVAS BACKGROUND
-       (Neural network / constellation effect)
        ────────────────────────────────── */
     function initParticleCanvas() {
         const canvas = document.getElementById('bgCanvas');
@@ -27,7 +26,6 @@
         resize();
         window.addEventListener('resize', resize);
 
-        // Track mouse for interactive connections
         document.addEventListener('mousemove', e => {
             mouse.x = e.clientX;
             mouse.y = e.clientY;
@@ -42,7 +40,6 @@
                 this.vy = (Math.random() - 0.5) * 0.4;
                 this.r = Math.random() * 1.5 + 0.5;
                 this.alpha = Math.random() * 0.4 + 0.1;
-                // Purple or cyan tint
                 this.hue = Math.random() > 0.6 ? 271 : 187;
             }
             update() {
@@ -50,8 +47,6 @@
                 this.y += this.vy;
                 if (this.x < 0 || this.x > W) this.vx *= -1;
                 if (this.y < 0 || this.y > H) this.vy *= -1;
-
-                // Mouse repulsion
                 const dx = this.x - mouse.x;
                 const dy = this.y - mouse.y;
                 const dist = Math.sqrt(dx * dx + dy * dy);
@@ -60,7 +55,6 @@
                     this.vx += dx * force;
                     this.vy += dy * force;
                 }
-                // Dampen velocity
                 this.vx *= 0.999;
                 this.vy *= 0.999;
             }
@@ -90,7 +84,6 @@
                         ctx.stroke();
                     }
                 }
-                // Mouse connections
                 const mdx = particles[i].x - mouse.x;
                 const mdy = particles[i].y - mouse.y;
                 const mdist = Math.sqrt(mdx * mdx + mdy * mdy);
@@ -121,40 +114,59 @@
     function initCursorGlow() {
         const glow = document.getElementById('cursorGlow');
         if (!glow) return;
-
         document.addEventListener('mousemove', e => {
             glow.style.left = e.clientX + 'px';
             glow.style.top = e.clientY + 'px';
             if (!glow.classList.contains('active')) glow.classList.add('active');
         }, { passive: true });
-
         document.addEventListener('mouseleave', () => glow.classList.remove('active'));
     }
 
     /* ──────────────────────────────────
-       3. BOOT SEQUENCE
+       3. BOOT SYSTEM — 3 PHASES
+       Phase 1: Intro prompt → "Decode This"
+       Phase 2: Cipher wall minigame
+       Phase 3: Success boot terminal
        ────────────────────────────────── */
+
+    // Switch which phase is visible
+    function showPhase(phaseId) {
+        document.querySelectorAll('.bp').forEach(el => el.classList.remove('active'));
+        const target = document.getElementById(phaseId);
+        if (target) target.classList.add('active');
+    }
+
+    /* ── PHASE 3: Boot Terminal (post-decode) ── */
     const bootLines = [
-        '[SYS]  Initializing secure connection...',
-        '[NET]  Establishing encrypted tunnel... OK',
-        '[AUTH] Verifying clearance level... GRANTED',
-        '[DB]   Loading Case #2026-AETHER-BREACH...',
-        '[SCAN] 20 evidence fragments detected',
-        '[SIG]  Threat signature "PHANTOM" identified',
-        '[SYS]  Mounting investigation portal...',
-        '[OK]   All systems operational. Welcome, Investigator.'
+        '[SYS]     Initializing secure uplink...',
+        '[AUTH]    Checking for Authorization...',
+        '[SYS]     Scanning biometric signature...',
+        '[OK]      Authorization Complete — Welcome Recruit',
+        '[NET]     Establishing encrypted tunnel... OK',
+        '[DB]      Loading Case #2026-AETHER-BREACH...',
+        '[SCAN]    20 evidence fragments detected',
+        '[SIG]     Threat signature "PHANTOM" cross-referenced',
+        '[SYS]     Mounting investigation portal...',
+        '[OK]      All systems operational. The breach begins.',
     ];
 
-    function runBoot() {
+    function runPhase3() {
+        showPhase('bpBoot');
+
+        const badge = document.getElementById('bootSuccessBadge');
         const term = document.getElementById('bootTerminal');
         const bar = document.getElementById('bootBar');
         const status = document.getElementById('bootStatus');
         const boot = document.getElementById('bootScreen');
-        let i = 0;
 
+        // Badge pulse in
+        setTimeout(() => badge.classList.add('visible'), 200);
+
+        let i = 0;
         function next() {
             if (i >= bootLines.length) {
-                status.textContent = 'ACCESS GRANTED';
+                status.textContent = 'ACCESS GRANTED — ENTERING AETHER CORP DATABASE';
+                status.style.color = '#4ade80';
                 bar.style.width = '100%';
                 setTimeout(() => {
                     boot.classList.add('done');
@@ -169,21 +181,26 @@
                     initCardTilt();
                     initMagneticButtons();
                     initTextScramble();
-                }, 500);
+                    setTimeout(initSideTerminal, 500);
+                }, 600);
                 return;
             }
             const el = document.createElement('div');
             el.className = 'bl';
             el.textContent = bootLines[i];
-            el.style.animationDelay = (i * 0.05) + 's';
+            // Colour-code lines
+            if (bootLines[i].startsWith('[DECODE]')) el.style.color = '#22d3ee';
+            else if (bootLines[i].startsWith('[AUTH]') || bootLines[i].includes('Nice work') || bootLines[i].includes('awaits')) el.style.color = '#a855f7';
+            else if (bootLines[i].startsWith('[OK]')) el.style.color = '#4ade80';
+            el.style.animationDelay = (i * 0.04) + 's';
             term.appendChild(el);
             term.scrollTop = term.scrollHeight;
             bar.style.width = ((i + 1) / bootLines.length * 100) + '%';
             status.textContent = bootLines[i].split(']')[1]?.trim() || '';
             i++;
-            setTimeout(next, 180 + Math.random() * 250);
+            setTimeout(next, 160 + Math.random() * 200);
         }
-        setTimeout(next, 400);
+        setTimeout(next, 500);
     }
 
     /* ──────────────────────────────────
@@ -210,22 +227,15 @@
 
     /* ──────────────────────────────────
        5. BIDIRECTIONAL SCROLL REVEALS
-       (fade in when scrolling down, 
-        fade out when scrolling back up)
        ────────────────────────────────── */
     function initReveals() {
         const allReveal = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-pop, .reveal-down');
 
-        // Auto-assign directional classes to existing .reveal elements based on position
-        document.querySelectorAll('.reveal').forEach((el, idx) => {
-            // Check if element is on the left or right half
-            const rect = el.getBoundingClientRect();
+        document.querySelectorAll('.reveal').forEach((el) => {
             const parentGrid = el.closest('.about-grid, .skills-grid, .guidelines-grid, .team-grid, .prizes-row, .wyg-grid');
-
             if (parentGrid) {
                 const children = Array.from(parentGrid.children);
                 const childIdx = children.indexOf(el);
-                // Stagger delay based on position in grid
                 el.setAttribute('data-delay', String((childIdx % 6) + 1));
             }
         });
@@ -235,7 +245,6 @@
                 if (entry.isIntersecting) {
                     entry.target.classList.add('vis');
                 } else {
-                    // Pop out when scrolling away (bidirectional)
                     entry.target.classList.remove('vis');
                 }
             });
@@ -259,8 +268,6 @@
             const ratio = Math.min(window.scrollY / max, 1);
             if (fill) fill.style.height = (ratio * 100) + '%';
             if (dot) dot.style.top = (ratio * trackH) + 'px';
-
-            // Navbar shadow on scroll
             if (nav) nav.classList.toggle('scrolled', window.scrollY > 100);
         }
 
@@ -282,7 +289,6 @@
         const links = document.querySelectorAll('.nav-link');
         const sections = document.querySelectorAll('.sec, .hero');
 
-        // Active tracking
         const obs = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -293,7 +299,6 @@
         }, { threshold: 0.2 });
         sections.forEach(s => { if (s.id) obs.observe(s); });
 
-        // Smooth scroll
         document.querySelectorAll('a[href^="#"]').forEach(a => {
             a.addEventListener('click', e => {
                 e.preventDefault();
@@ -384,7 +389,7 @@
     }
 
     /* ──────────────────────────────────
-       12. CARD TILT EFFECT (3D perspective)
+       12. CARD TILT EFFECT
        ────────────────────────────────── */
     function initCardTilt() {
         const tiltCards = document.querySelectorAll(
@@ -402,7 +407,6 @@
                 const rotateY = ((x - cx) / cx) * 4;
                 card.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-5px) scale(1.02)`;
             });
-
             card.addEventListener('mouseleave', () => {
                 card.style.transform = '';
                 card.style.transition = 'transform .5s ease';
@@ -416,25 +420,19 @@
        ────────────────────────────────── */
     function initMagneticButtons() {
         const magnets = document.querySelectorAll('.btn-primary, .nav-cta, .tool-link');
-
         magnets.forEach(btn => {
             btn.addEventListener('mousemove', e => {
                 const rect = btn.getBoundingClientRect();
                 const x = e.clientX - rect.left - rect.width / 2;
                 const y = e.clientY - rect.top - rect.height / 2;
-                const moveX = x * 0.2;
-                const moveY = y * 0.2;
-                btn.style.transform += ` translate(${moveX}px, ${moveY}px)`;
+                btn.style.transform += ` translate(${x * 0.2}px, ${y * 0.2}px)`;
             });
-            btn.addEventListener('mouseleave', () => {
-                btn.style.transform = '';
-            });
+            btn.addEventListener('mouseleave', () => { btn.style.transform = ''; });
         });
     }
 
     /* ──────────────────────────────────
        14. TEXT SCRAMBLE on section headings
-       (Cyber scramble when section enters viewport)
        ────────────────────────────────── */
     function initTextScramble() {
         const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%&*!?';
@@ -491,15 +489,9 @@
     }
 
     /* ──────────────────────────────────
-       16. SECTION BORDER GLOW ON SCROLL
-       (subtle glow on section separators)
+       16. SECTION NUMBER GLOW
        ────────────────────────────────── */
     function initSectionGlow() {
-        document.querySelectorAll('.sec-dark::before, .sec-line').forEach(el => {
-            // Section lines already animate on hover via CSS
-        });
-
-        // Animate section number counters
         document.querySelectorAll('.sec-num').forEach(num => {
             const obs = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
@@ -515,10 +507,158 @@
     }
 
     /* ──────────────────────────────────
+       17. SIDE TERMINAL MONITOR
+       Background terminal on the right that prints
+       "SECTION UNLOCKED" messages as you scroll.
+       ────────────────────────────────── */
+    const sectionTerminalMap = {
+        'hero':     [
+            '> AETHER CORP DATABASE LOADED',
+            '> CASE #2026-AETHER-BREACH OPEN',
+            '> AGENT DASHBOARD ACTIVE',
+        ],
+        'about':    [
+            '> [01] CASE OVERVIEW — UNLOCKED',
+            '> LOADING MISSION PARAMETERS...',
+            '> 4 BRIEFING FILES INDEXED',
+        ],
+        'briefing': [
+            '> [02] CLASSIFIED BRIEFING — ACCESSED',
+            '> DECRYPTING CASE LOGS...',
+            '> PHANTOM SIGNATURE ON FILE',
+        ],
+        'workflow': [
+            '> [03] INVESTIGATION PROTOCOL — LOADED',
+            '> 5 OPERATION STEPS MAPPED',
+        ],
+        'tools':    [
+            '> [05] FORENSIC TOOLKIT — MOUNTED',
+            '> 8 ANALYSIS TOOLS VERIFIED',
+            '> CYBERCHEF: ONLINE',
+            '> WIRESHARK: READY',
+        ],
+        'prizes':   [
+            '> [07] REWARD MATRIX — DECRYPTED',
+            '> PRIZE POOL: ₹3,500 CONFIRMED',
+            '> TOP 3 POSITIONS TRACKED',
+        ],
+        'team':     [
+            '> [08] PERSONNEL FILES — AUTHORIZED',
+            '> 12 AGENTS IDENTIFIED',
+            '> CLEARANCE: LEVEL 5',
+        ],
+        'faq':      [
+            '> [10] INTEL DATABASE — QUERIED',
+            '> 7 CLASSIFIED ENTRIES FOUND',
+            '> ALL QUERIES RESOLVED',
+        ],
+    };
+
+    function initSideTerminal() {
+        const terminal = document.getElementById('sideTerminal');
+        const body = document.getElementById('stBody');
+        if (!terminal || !body) return;
+
+        // Show terminal
+        terminal.classList.add('visible');
+
+        const seenSections = new Set();
+        const MAX_LINES = 18;
+
+        function addLine(text, color) {
+            const line = document.createElement('div');
+            line.className = 'st-line st-new';
+            line.textContent = text;
+            if (color) line.style.color = color;
+
+            // Remove cursor from last line before adding new
+            const oldCursor = body.querySelector('.st-cursor');
+            if (oldCursor) oldCursor.remove();
+
+            body.appendChild(line);
+
+            // Trim old lines
+            const lines = body.querySelectorAll('.st-line');
+            if (lines.length > MAX_LINES) {
+                lines[0].style.opacity = '0';
+                lines[0].style.transform = 'translateY(-8px)';
+                setTimeout(() => lines[0].remove(), 300);
+            }
+
+            // Add blinking cursor to last line
+            const cursor = document.createElement('span');
+            cursor.className = 'st-cursor';
+            cursor.textContent = '_';
+            line.appendChild(cursor);
+
+            body.scrollTop = body.scrollHeight;
+
+            // Animate in
+            requestAnimationFrame(() => line.classList.add('st-visible'));
+        }
+
+        function addSectionLines(sectionId) {
+            if (seenSections.has(sectionId)) return;
+            seenSections.add(sectionId);
+
+            const messages = sectionTerminalMap[sectionId];
+            if (!messages) return;
+
+            messages.forEach((msg, i) => {
+                setTimeout(() => {
+                    const color = msg.includes('UNLOCKED') || msg.includes('ACCESSED') || msg.includes('LOADED')
+                        ? 'rgba(34, 211, 238, 0.4)'
+                        : msg.includes('PHANTOM') || msg.includes('DECRYPTED')
+                        ? 'rgba(168, 85, 247, 0.4)'
+                        : 'rgba(200, 200, 230, 0.2)';
+                    addLine(msg, color);
+                }, i * 350);
+            });
+        }
+
+        // Observe all sections
+        const sectionIds = Object.keys(sectionTerminalMap);
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    addSectionLines(entry.target.id);
+                }
+            });
+        }, { threshold: 0.15 });
+
+        sectionIds.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) observer.observe(el);
+        });
+
+        // Start with hero
+        setTimeout(() => addSectionLines('hero'), 800);
+
+        // Periodic "heartbeat" lines to show system is alive
+        const heartbeats = [
+            '> SYS NOMINAL',
+            '> SCANNING...',
+            '> NETWORK OK',
+            '> LOGS SYNCED',
+            '> MEMORY CLEAN',
+            '> UPTIME: STABLE',
+        ];
+        let hbIdx = 0;
+        setInterval(() => {
+            // Only show heartbeat if no section has been added recently
+            addLine('> ' + heartbeats[hbIdx % heartbeats.length], 'rgba(90,94,120,0.7)');
+            hbIdx++;
+        }, 12000);
+    }
+
+    /* ──────────────────────────────────
        ✦ INITIALIZATION
        ────────────────────────────────── */
     document.addEventListener('DOMContentLoaded', () => {
-        runBoot();
+        // Boot phases
+        runPhase3();
+
+        // UI systems (don't depend on boot)
         initNavbar();
         initHamburger();
         initScrollNav();
@@ -526,6 +666,7 @@
         initCTFd();
         initSectionGlow();
         setTimeout(initParallax, 2000);
+
     });
 
 })();
