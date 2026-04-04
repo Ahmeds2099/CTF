@@ -8,6 +8,138 @@
     'use strict';
 
     /* ──────────────────────────────────
+       HEX EDITOR AUTHORIZATION MINIGAME
+       ────────────────────────────────── */
+    const CORRECT_PASSWORD = 'RECRUITMENT';
+    
+    function initHexAuthGame() {
+        const hexAuthScreen = document.getElementById('hexAuthScreen');
+        const hexEditorBody = document.getElementById('hexEditorBody');
+        const hexPasswordInput = document.getElementById('hexPasswordInput');
+        const hexSubmitBtn = document.getElementById('hexSubmitBtn');
+        const hexError = document.getElementById('hexError');
+        const hexCloseBtn = document.getElementById('hexCloseBtn');
+        
+        // Generate hex dump with hidden password
+        function generateHexDump() {
+            const lines = [];
+            const totalLines = 16;
+            const passwordLine = 7; // Middle of the hex dump
+            
+            for (let i = 0; i < totalLines; i++) {
+                const offset = (i * 16).toString(16).toUpperCase().padStart(8, '0');
+                
+                if (i === passwordLine) {
+                    // Insert the password in ASCII
+                    const hexValues = '4A 6F 69 6E 20 75 73 20 66 6F 72 20 74 68 65 20';
+                    const ascii = 'Join us for the ';
+                    lines.push({ offset, hex: hexValues, ascii, isPassword: false });
+                    
+                    // Next line with "RECRUITMENT"
+                    const offset2 = ((i + 1) * 16).toString(16).toUpperCase().padStart(8, '0');
+                    const hexValues2 = '52 45 43 52 55 49 54 4D 45 4E 54 20 65 76 65 6E';
+                    const ascii2 = 'RECRUITMENT even';
+                    lines.push({ offset: offset2, hex: hexValues2, ascii: ascii2, isPassword: true });
+                    i++; // Skip next iteration since we added two lines
+                } else {
+                    // Random hex values
+                    const hexBytes = [];
+                    const asciiChars = [];
+                    for (let j = 0; j < 16; j++) {
+                        const byte = Math.floor(Math.random() * 256);
+                        hexBytes.push(byte.toString(16).toUpperCase().padStart(2, '0'));
+                        // Generate readable-ish ASCII
+                        const char = (byte > 31 && byte < 127) ? String.fromCharCode(byte) : '.';
+                        asciiChars.push(char);
+                    }
+                    lines.push({
+                        offset,
+                        hex: hexBytes.join(' '),
+                        ascii: asciiChars.join('')
+                    });
+                }
+            }
+            
+            return lines;
+        }
+        
+        // Render hex dump
+        const hexData = generateHexDump();
+        hexEditorBody.innerHTML = hexData.map(line => {
+            const asciiClass = line.isPassword ? 'hex-ascii hex-password-string' : 'hex-ascii';
+            return `
+                <div class="hex-line">
+                    <span class="hex-offset">${line.offset}</span>
+                    <span class="hex-values">${line.hex}</span>
+                    <span class="${asciiClass}">${line.ascii}</span>
+                </div>
+            `;
+        }).join('');
+        
+        // Close button (just hides the window, doesn't skip the game)
+        let windowClosed = false;
+        hexCloseBtn.addEventListener('click', () => {
+            document.querySelector('.hex-editor-window').style.transform = 'scale(0.95)';
+            document.querySelector('.hex-editor-window').style.opacity = '0';
+            setTimeout(() => {
+                document.querySelector('.hex-editor-window').style.display = 'none';
+                windowClosed = true;
+            }, 300);
+        });
+        
+        // Handle password submission
+        function handleSubmit() {
+            const input = hexPasswordInput.value.trim().toUpperCase();
+            
+            if (!input) {
+                hexError.textContent = '⚠ Access code required';
+                return;
+            }
+            
+            if (input === CORRECT_PASSWORD) {
+                // Success!
+                hexError.textContent = '';
+                showSuccessMessage();
+            } else {
+                // Wrong password
+                hexError.textContent = '✗ ACCESS DENIED — Invalid authorization code';
+                hexPasswordInput.value = '';
+                hexPasswordInput.classList.add('shake');
+                setTimeout(() => hexPasswordInput.classList.remove('shake'), 500);
+            }
+        }
+        
+        hexSubmitBtn.addEventListener('click', handleSubmit);
+        hexPasswordInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') handleSubmit();
+        });
+        
+        // Success message and transition to boot
+        function showSuccessMessage() {
+            const successDiv = document.createElement('div');
+            successDiv.className = 'hex-success-message';
+            successDiv.innerHTML = `
+                <div class="hex-success-content">
+                    <div class="hex-success-icon"><i class="fas fa-check-circle"></i></div>
+                    <div class="hex-success-title">ACCESS GRANTED</div>
+                    <div class="hex-success-text">Authorization successful. Welcome, recruit.</div>
+                    <div class="hex-success-cta">Enjoy decoding? Check out this event below →</div>
+                </div>
+            `;
+            document.body.appendChild(successDiv);
+            
+            setTimeout(() => {
+                successDiv.style.opacity = '0';
+                hexAuthScreen.classList.add('done');
+                setTimeout(() => {
+                    successDiv.remove();
+                    runPhase3();
+                }, 800);
+            }, 2500);
+        }
+    }
+
+    /* ──────────────────────────────────
        1. ANIMATED PARTICLE CANVAS BACKGROUND
        ────────────────────────────────── */
     function initParticleCanvas() {
@@ -144,7 +276,7 @@
         '[OK]      Authorization Complete — Welcome Recruit',
         '[NET]     Establishing encrypted tunnel... OK',
         '[DB]      Loading Case #2026-AETHER-BREACH...',
-        '[SCAN]    20 evidence fragments detected',
+        '[SCAN]    15 evidence fragments detected',
         '[SIG]     Threat signature "PHANTOM" cross-referenced',
         '[SYS]     Mounting investigation portal...',
         '[OK]      All systems operational. The breach begins.',
@@ -655,8 +787,8 @@
        ✦ INITIALIZATION
        ────────────────────────────────── */
     document.addEventListener('DOMContentLoaded', () => {
-        // Boot phases
-        runPhase3();
+        // Start with hex authorization minigame
+        initHexAuthGame();
 
         // UI systems (don't depend on boot)
         initNavbar();
