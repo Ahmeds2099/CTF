@@ -530,8 +530,8 @@ button { cursor:pointer; border:none; background:none; font-family:inherit; colo
 
 /* ═══ PRIZES ═══ */
 .prizes-row {
-    display:flex; justify-content:center; align-items:flex-end; gap:1.5rem;
-    flex-wrap:wrap; margin-bottom:2rem;
+    display:flex; justify-content:center; align-items:center; gap:0.5rem;
+    flex-wrap:wrap; margin-bottom:4rem; margin-top:2rem;
 }
 .prize-card {
     background:var(--surface); border:1px solid var(--border);
@@ -545,12 +545,47 @@ button { cursor:pointer; border:none; background:none; font-family:inherit; colo
 }
 .prize-card:hover::before { opacity:1; }
 .prize-card:hover { transform:translateY(-12px) scale(1.04); }
-.prize-card.gold { border-color:rgba(251,191,36,.25); order:2; }
-.prize-card.gold:hover { box-shadow:0 12px 40px rgba(251,191,36,.15); border-color:rgba(251,191,36,.5); }
-.prize-card.silver { order:1; border-color:rgba(148,163,184,.2); }
-.prize-card.silver:hover { box-shadow:0 12px 40px rgba(148,163,184,.1); border-color:rgba(148,163,184,.4); }
-.prize-card.bronze { order:3; border-color:rgba(217,119,6,.2); }
-.prize-card.bronze:hover { box-shadow:0 12px 40px rgba(217,119,6,.1); border-color:rgba(217,119,6,.4); }
+.prize-card.gold { 
+    border-color:rgba(251,191,36,.4); 
+    order:2; 
+    transform:scale(1.15); 
+    z-index:10; 
+    box-shadow:0 15px 50px rgba(251,191,36,.2);
+    background:rgba(20, 16, 45, 0.95);
+}
+.prize-card.gold:hover { 
+    transform:scale(1.2) translateY(-10px);
+    box-shadow:0 20px 60px rgba(251,191,36,.3); 
+    border-color:rgba(251,191,36,.8); 
+}
+
+.prize-card.silver { 
+    order:1; 
+    border-color:rgba(148,163,184,.2); 
+    transform:scale(0.9) translateX(15px);
+    opacity:0.85;
+    z-index:1;
+}
+.prize-card.silver:hover { 
+    opacity:1;
+    transform:scale(0.95) translateY(-5px) translateX(15px);
+    box-shadow:0 12px 40px rgba(148,163,184,.15); 
+    border-color:rgba(148,163,184,.5); 
+}
+
+.prize-card.participant { 
+    order:3; 
+    border-color:rgba(168,85,247,.2); 
+    transform:scale(0.9) translateX(-15px);
+    opacity:0.85;
+    z-index:1;
+}
+.prize-card.participant:hover { 
+    opacity:1;
+    transform:scale(0.95) translateY(-5px) translateX(-15px);
+    box-shadow:0 12px 40px rgba(168,85,247,.15); 
+    border-color:rgba(168,85,247,.5); 
+}
 .pr-rank { font-family:var(--display); font-size:.6rem; letter-spacing:3px; color:var(--text3); }
 .pr-crown { position:absolute; top:-14px; left:50%; transform:translateX(-50%); color:var(--gold); font-size:1.2rem; animation:crownF 3s ease-in-out infinite; }
 @keyframes crownF { 0%,100%{transform:translateX(-50%) translateY(0);} 50%{transform:translateX(-50%) translateY(-5px);} }
@@ -563,7 +598,8 @@ button { cursor:pointer; border:none; background:none; font-family:inherit; colo
 .prize-card.gold .pr-icon { background:linear-gradient(135deg,#ffd700,#b8860b); color:#1a1a2e; }
 .prize-card.gold:hover .pr-icon { box-shadow:0 0 25px rgba(255,215,0,.3); }
 .prize-card.silver .pr-icon { background:linear-gradient(135deg,#b0c4de,#708090); color:#1a1a2e; }
-.prize-card.bronze .pr-icon { background:linear-gradient(135deg,#cd7f32,#8b4513); color:#1a1a2e; }
+.prize-card.participant .pr-icon { background:linear-gradient(135deg,var(--purple),var(--purple-deep)); color:#fff; }
+.prize-card.participant:hover .pr-icon { box-shadow:0 0 25px var(--purple-glow); }
 .pr-amount {
     font-family:var(--display); font-size:1.6rem; font-weight:800; margin-bottom:.3rem;
     transition:text-shadow .3s ease;
@@ -571,20 +607,9 @@ button { cursor:pointer; border:none; background:none; font-family:inherit; colo
 .prize-card:hover .pr-amount { text-shadow:0 0 20px currentColor; }
 .prize-card.gold .pr-amount { color:var(--gold); }
 .prize-card.silver .pr-amount { color:var(--silver); }
-.prize-card.bronze .pr-amount { color:var(--bronze); }
+.prize-card.participant .pr-amount { color:var(--purple-light); }
 .prize-card p { font-size:.72rem; color:var(--text3); }
 
-.all-part {
-    display:flex; align-items:center; justify-content:center; gap:.8rem;
-    background:var(--surface); border:1px solid var(--border);
-    border-radius:10px; padding:1rem 1.5rem; max-width:480px; margin:0 auto 2rem;
-    transition:all .35s var(--spring);
-}
-.all-part:hover { border-color:var(--purple); transform:translateY(-3px); box-shadow:0 8px 20px rgba(168,85,247,.08); }
-.all-part i { color:var(--purple); font-size:1.3rem; transition:transform .4s var(--spring); }
-.all-part:hover i { transform:rotate(15deg) scale(1.2); }
-.all-part strong { display:block; font-size:.9rem; }
-.all-part span { font-size:.78rem; color:var(--text2); }
 
 .what-you-get {
     background:var(--surface); border:1px solid var(--border);
@@ -793,9 +818,11 @@ button { cursor:pointer; border:none; background:none; font-family:inherit; colo
     .hamburger { display:flex; }
     .scroll-nav { display:none; }
     .about-grid { grid-template-columns:1fr; }
-    .prizes-row { flex-direction:column; align-items:center; }
-    .prize-card { width:100%; max-width:300px; }
-    .prize-card.gold { order:0; }
+    .prizes-row { flex-direction:column; align-items:center; gap:2rem; }
+    .prize-card { width:100%; max-width:320px; transform:none!important; opacity:1!important; margin:0!important; }
+    .prize-card.gold { order:1; }
+    .prize-card.silver { order:2; }
+    .prize-card.participant { order:3; }
     .hero-logos { gap:.8rem; }
     .hero-logo-img { height:38px; }
     .tool-row { flex-direction:column; text-align:center; }
