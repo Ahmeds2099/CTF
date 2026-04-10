@@ -759,6 +759,9 @@ button { cursor:pointer; border:none; background:none; font-family:inherit; colo
 }
 .footer-logos img:hover { transform:scale(1.12) translateY(-2px); filter:brightness(1.15); }
 .footer-motto { font-family:var(--mono); font-size:.68rem; color:var(--text3); font-style:italic; }
+.footer-middle { padding:1.2rem 0; text-align:center; font-size:.75rem; color:var(--text2); border-top:1px solid var(--border); border-bottom:1px solid var(--border); }
+.footer-middle a { color:var(--cyan); transition:color .3s ease, text-shadow .3s ease; text-decoration:underline; }
+.footer-middle a:hover { color:var(--purple-light); text-shadow:0 0 8px var(--purple-glow); }
 .footer-bottom { display:flex; justify-content:space-between; flex-wrap:wrap; gap:.5rem; padding:1.2rem 0; font-size:.65rem; color:var(--text3); letter-spacing:.5px; }
 
 /* ═══════════════════════════════════════════
@@ -817,6 +820,7 @@ button { cursor:pointer; border:none; background:none; font-family:inherit; colo
     .nav-center { display:none; }
     .hamburger { display:flex; }
     .scroll-nav { display:none; }
+    .vignette { opacity:0 !important; }
     .about-grid { grid-template-columns:1fr; }
     .prizes-row { flex-direction:column; align-items:center; gap:2rem; }
     .prize-card { width:100%; max-width:320px; transform:none!important; opacity:1!important; margin:0!important; }
@@ -827,7 +831,7 @@ button { cursor:pointer; border:none; background:none; font-family:inherit; colo
     .hero-logo-img { height:38px; }
     .tool-row { flex-direction:column; text-align:center; }
     .tool-body { text-align:center; }
-    .footer-top,.footer-bottom { flex-direction:column; align-items:center; text-align:center; }
+    .footer-top,.footer-middle,.footer-bottom { flex-direction:column; align-items:center; text-align:center; }
     .wyg-grid { grid-template-columns:1fr; }
     .cursor-glow { display:none; }
 }
