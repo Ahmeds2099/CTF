@@ -611,6 +611,17 @@ button { cursor:pointer; border:none; background:none; font-family:inherit; colo
 .prize-card.participant .pr-amount { color:var(--purple-light); }
 .prize-card p { font-size:.72rem; color:var(--text3); }
 
+.all-part {
+    display:flex; align-items:center; justify-content:center; gap:.8rem;
+    background:var(--surface); border:1px solid var(--border);
+    border-radius:10px; padding:1rem 1.5rem; max-width:480px; margin:0 auto 2rem;
+    transition:all .35s var(--spring);
+}
+.all-part:hover { border-color:var(--purple); transform:translateY(-3px); box-shadow:0 8px 20px rgba(168,85,247,.08); }
+.all-part i { color:var(--purple); font-size:1.3rem; transition:transform .4s var(--spring); }
+.all-part:hover i { transform:rotate(15deg) scale(1.2); }
+.all-part strong { display:block; font-size:.9rem; }
+.all-part span { font-size:.78rem; color:var(--text2); }
 
 .what-you-get {
     background:var(--surface); border:1px solid var(--border);
