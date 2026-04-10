@@ -531,13 +531,29 @@ button { cursor:pointer; border:none; background:none; font-family:inherit; colo
 
 /* ═══ PRIZES ═══ */
 .prizes-row {
-    display:flex; justify-content:center; align-items:center; gap:0.5rem;
+    display:flex; justify-content:center; align-items:flex-start; gap:2rem;
     flex-wrap:wrap; margin-bottom:4rem; margin-top:2rem;
 }
 .prize-card {
-    background:var(--surface); border:1px solid var(--border);
+    background:var(--surface); border:2px solid var(--border);
     border-radius:16px; padding:2rem 1.5rem; text-align:center;
-    width:240px; transition:all .45s var(--spring); position:relative; overflow:hidden;
+    flex:1; min-width:280px; max-width:320px; transition:all .45s var(--spring); position:relative; overflow:hidden;
+}
+.prize-card:hover {
+    border-color:var(--purple);
+    box-shadow:0 12px 35px rgba(168,85,247,.15), inset 0 0 40px rgba(168,85,247,.05);
+    transform:translateY(-4px);
+    background:var(--surface-hover);
+}
+.prize-card.popout {
+    transform:scale(1.08);
+    border-color:var(--gold);
+    box-shadow:0 15px 45px rgba(251,191,36,.2), inset 0 0 50px rgba(251,191,36,.08);
+}
+.prize-card.popout:hover {
+    transform:scale(1.12) translateY(-8px);
+    box-shadow:0 20px 60px rgba(251,191,36,.25), inset 0 0 60px rgba(251,191,36,.12);
+    border-color:var(--gold);
 }
 .prize-card::before {
     content:''; position:absolute; inset:0;
@@ -610,18 +626,6 @@ button { cursor:pointer; border:none; background:none; font-family:inherit; colo
 .prize-card.silver .pr-amount { color:var(--silver); }
 .prize-card.participant .pr-amount { color:var(--purple-light); }
 .prize-card p { font-size:.72rem; color:var(--text3); }
-
-.all-part {
-    display:flex; align-items:center; justify-content:center; gap:.8rem;
-    background:var(--surface); border:1px solid var(--border);
-    border-radius:10px; padding:1rem 1.5rem; max-width:480px; margin:0 auto 2rem;
-    transition:all .35s var(--spring);
-}
-.all-part:hover { border-color:var(--purple); transform:translateY(-3px); box-shadow:0 8px 20px rgba(168,85,247,.08); }
-.all-part i { color:var(--purple); font-size:1.3rem; transition:transform .4s var(--spring); }
-.all-part:hover i { transform:rotate(15deg) scale(1.2); }
-.all-part strong { display:block; font-size:.9rem; }
-.all-part span { font-size:.78rem; color:var(--text2); }
 
 .what-you-get {
     background:var(--surface); border:1px solid var(--border);
