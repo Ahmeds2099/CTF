@@ -367,7 +367,8 @@ button { cursor:pointer; border:none; background:none; font-family:inherit; colo
 }
 .detail-card:hover i { transform:scale(1.25) rotate(-8deg); color:var(--purple-light); }
 .detail-card strong { display:block; font-size:.88rem; }
-.detail-card span { font-size:.75rem; color:var(--text3); }
+.detail-card span { font-size:.75rem; color:var(--text3); display:block; margin-top:.35rem; }
+.detail-card span.payment-note { color:var(--cyan); font-style:italic; margin-top:.5rem; font-size:.7rem; }
 
 /* ═══ TERMINAL CARD ═══ */
 .terminal-card {
